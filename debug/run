@@ -1,0 +1,13 @@
+#!/bin/sh
+
+export TZ=Asia/Shanghai
+export LC_ALL='en_US.UTF8'
+export PATH=/home/admin/vdom/perl/bin/:$PATH
+
+BIN=$(readlink -f -- $(dirname -- "$0"))
+cd $BIN/..
+
+export LD_LIBRARY_PATH=./lib/:/home/admin/extractor_base/lib:$LD_LIBRARY_PATH
+exec sbin/nginx -c conf/nginx.conf
+
+

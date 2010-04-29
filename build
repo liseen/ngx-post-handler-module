@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+export TZ=Asia/Shanghai
+export LC_ALL='en_US.UTF8'
+CURDIR=$(readlink -f -- $(dirname -- "$0"))
+
+NGX_POST_HANDLER_MODULE_PATH="$CURDIR/"
+NGX_PATH="$CURDIR/../nginx-0.8.19/"
+NGX_INSTALL_PATH="/opt/nginx/"
+
+echo "$NGX_POST_HANDLER_MODULE_PATH"
+
+pushd "$NGX_PATH"
+
+./configure --prefix=$NGX_INSTALL_PATH --add-module=$NGX_POST_HANDLER_MODULE_PATH
+
+make -j8
+make install
+
+popd

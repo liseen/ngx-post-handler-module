@@ -1,0 +1,44 @@
+Name
+    nginx-post-handler-module -load a dynamic libray processed post data and
+    return the processed string, this's api is:
+
+    typedef struct {
+        char name[256];
+        void * (*init)(const char* conf_file);
+        char * (*process)(void *handler, const char* input);
+	    int (*uninit)(void *handler);
+    } post_handler_worker;
+
+Version
+    0.02
+
+Synopsis
+    location /parser {
+        post_handler parser parser.conf
+    }
+
+    pushd demo/parrot
+    make
+    popd
+    export PATH=/opt/nginx/sbin:$PATH
+    export LD_LIBRARY_PATH=`pwd`/demo/parrot:$LD_LIBRARY_PATH
+
+    cd test
+    prove t/
+
+    or you can test by curl
+        curl -d abc http://localhost:1984/parrot
+    get:
+        abcabcabcabcabc
+
+Compile and Install:
+    install pcre library
+    modify the build script
+    sudo ./build
+
+Test
+    cd ngx-post-handlermodule
+    cd test
+    prove t/*.t
+
+
